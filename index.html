@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prop Firm Payout Calculator</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font as per instructions */
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5; /* Light gray background */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top for better scrolling on smaller screens */
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px; /* Rounded corners */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            max-width: 650px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 30px; /* Add some margin at the bottom for better spacing */
+        }
+        h1 {
+            color: #2c3e50; /* Darker blue/gray for heading */
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600; /* Slightly bolder labels */
+            color: #555;
+            font-size: 1.1em;
+        }
+        .input-group input[type="number"] {
+            width: calc(100% - 24px); /* Adjust width for padding and border */
+            padding: 12px;
+            border: 1px solid #c0c0c0; /* Lighter border color */
+            border-radius: 8px; /* Rounded input fields */
+            font-size: 1.1em;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            transition: border-color 0.3s ease; /* Smooth transition for focus */
+        }
+        .input-group input[type="number"]:focus {
+            border-color: #007bff; /* Highlight on focus */
+            outline: none; /* Remove default outline */
+        }
+        button {
+            background-color: #007bff; /* Primary blue for button */
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px; /* Rounded button */
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 25px;
+            transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth hover and click effects */
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); /* Soft shadow for button */
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+        button:active {
+            transform: translateY(0); /* Return to original position on click */
+            box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+        }
+        .result-box {
+            margin-top: 35px;
+            padding: 20px;
+            border: 1px solid #b3d9ff; /* Lighter blue border */
+            background-color: #e6f7ff; /* Very light blue background */
+            border-radius: 8px;
+            text-align: left; /* Align text left within the box */
+        }
+        .result-box p {
+            margin: 10px 0;
+            font-size: 1.15em;
+            color: #333;
+            display: flex; /* Use flexbox for better alignment of labels and values */
+            justify-content: space-between; /* Space out label and value */
+        }
+        .result-box strong {
+            color: #0056b3; /* Darker blue for emphasis */
+            flex-shrink: 0; /* Prevent strong tag from shrinking */
+            margin-right: 10px; /* Space between label and value */
+        }
+        .result-box span {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        .note {
+            font-size: 0.95em;
+            color: #777;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+            .input-group label {
+                font-size: 1em;
+            }
+            .input-group input[type="number"],
+            button {
+                font-size: 1em;
+                padding: 10px;
+            }
+            .result-box p {
+                font-size: 1em;
+                flex-direction: column; /* Stack label and value on small screens */
+                align-items: flex-start;
+            }
+            .result-box strong {
+                margin-bottom: 5px; /* Add space when stacked */
+                margin-right: 0;
+            }
+        }
+    </style>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Prop Firm Payout Calculator</h1>
+
+        <div class="input-group">
+            <label for="tradingProfit">Trading Profit ($):</label>
+            <input type="number" id="tradingProfit" value="5121.6" step="0.01">
+        </div>
+
+        <div class="input-group">
+            <label for="payoutShare">Your Payout Share (%):</label>
+            <input type="number" id="payoutShare" value="95" step="0.1">
+        </div>
+
+        <div class="input-group">
+            <label for="serviceFee">Service Fee on Payout (%):</label>
+            <input type="number" id="serviceFee" value="3" step="0.1">
+        </div>
+
+        <div class="input-group">
+            <label for="transactionLimitTHB">Transaction Limit (THB):</label>
+            <input type="number" id="transactionLimitTHB" value="40000" step="1">
+        </div>
+
+        <div class="input-group">
+            <label for="costPerTransactionUSD">Cost per Transaction (USD):</label>
+            <input type="number" id="costPerTransactionUSD" value="10" step="0.01">
+        </div>
+
+        <div class="input-group">
+            <label for="usdToThbRate">USD to THB Exchange Rate:</label>
+            <input type="number" id="usdToThbRate" value="36.6" step="0.01">
+        </div>
+
+        <button onclick="calculatePayout()">Calculate Payout</button>
+
+        <div class="result-box">
+            <p><strong>Payout After Share Redaction:</strong> $<span id="resultPayoutShare">0.00</span></p>
+            <p><strong>Service Fee Amount:</strong> $<span id="resultServiceFeeAmount">0.00</span></p>
+            <p><strong>Payout After Service Fee:</strong> $<span id="resultPayoutAfterFee">0.00</span></p>
+            <p><strong>Payout in THB:</strong> <span id="resultPayoutTHB">0.00</span> THB</p>
+            <p><strong>Number of Transactions:</strong> <span id="resultNumTransactions">0</span></p>
+            <p><strong>Total Transfer Fees:</strong> $<span id="resultTotalTransferFees">0.00</span></p>
+            <p><strong>Final Amount Received (USD):</strong> $<span id="resultFinalAmount">0.00</span></p>
+        </div>
+
+        <p class="note">*Values are rounded to two decimal places where appropriate. Exchange rate can fluctuate. Always verify current exchange rates and firm fees.</p>
+    </div>
+
+    <script>
+        /**
+         * Calculates the prop firm payout based on user inputs.
+         * This function reads values from the input fields, performs the necessary calculations,
+         * and then updates the display elements with the computed results.
+         */
+        function calculatePayout() {
+            // Get input values from the HTML elements
+            // parseFloat is used to convert the string value from input fields to numbers
+            const tradingProfit = parseFloat(document.getElementById('tradingProfit').value);
+            // Convert percentage inputs to decimal for calculation (e.g., 95% becomes 0.95)
+            const payoutShare = parseFloat(document.getElementById('payoutShare').value) / 100;
+            const serviceFee = parseFloat(document.getElementById('serviceFee').value) / 100;
+            const transactionLimitTHB = parseFloat(document.getElementById('transactionLimitTHB').value);
+            const costPerTransactionUSD = parseFloat(document.getElementById('costPerTransactionUSD').value);
+            const usdToThbRate = parseFloat(document.getElementById('usdToThbRate').value);
+
+            // --- Calculation Steps ---
+
+            // 1. Calculate Payout After Share Redaction (USD)
+            // This is the profit remaining after the prop firm takes its share.
+            const payoutAfterShare = tradingProfit * payoutShare;
+
+            // 2. Calculate Service Fee Amount (USD)
+            // This fee is applied to the amount the trader receives after the prop firm's share.
+            const serviceFeeAmount = payoutAfterShare * serviceFee;
+
+            // 3. Calculate Payout After Service Fee (USD)
+            // This is the net amount in USD before converting to THB and considering transfer fees.
+            const payoutAfterFee = payoutAfterShare - serviceFeeAmount;
+
+            // 4. Calculate Payout in THB (before transfer fees)
+            // Convert the USD amount to Thai Baht using the current exchange rate.
+            const payoutInTHB = payoutAfterFee * usdToThbRate;
+
+            // 5. Calculate Number of Transactions
+            // Determine how many transactions are needed based on the THB transaction limit.
+            // Math.ceil() is used to round up, as even a small remainder requires a full extra transaction.
+            const numTransactions = Math.ceil(payoutInTHB / transactionLimitTHB);
+
+            // 6. Calculate Total Transfer Fees (USD)
+            // Multiply the number of transactions by the cost per transaction in USD.
+            const totalTransferFees = numTransactions * costPerTransactionUSD;
+
+            // 7. Calculate Final Amount Received (USD)
+            // Subtract the total transfer fees from the payout after service fee to get the final net amount.
+            const finalAmount = payoutAfterFee - totalTransferFees;
+
+            // --- Display Results ---
+
+            // Update the text content of the corresponding span elements with the calculated values.
+            // .toFixed(2) is used to format the numbers to two decimal places (currency format).
+            document.getElementById('resultPayoutShare').textContent = payoutAfterShare.toFixed(2);
+            document.getElementById('resultServiceFeeAmount').textContent = serviceFeeAmount.toFixed(2);
+            document.getElementById('resultPayoutAfterFee').textContent = payoutAfterFee.toFixed(2);
+            document.getElementById('resultPayoutTHB').textContent = payoutInTHB.toFixed(2);
+            document.getElementById('resultNumTransactions').textContent = numTransactions; // No .toFixed for integer
+            document.getElementById('resultTotalTransferFees').textContent = totalTransferFees.toFixed(2);
+            document.getElementById('resultFinalAmount').textContent = finalAmount.toFixed(2);
+        }
+
+        // Event listener to automatically run the calculation when the page loads.
+        // This populates the results section with calculations based on the default input values.
+        document.addEventListener('DOMContentLoaded', calculatePayout);
+    </script>
+</body>
+</html>
